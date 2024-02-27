@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define size 32
+
+void sender(int *dataPackets, int packets){
+    int *frequencies = (int *)malloc(sizeof(int) * 32);
+    srand(time(NULL));
+    for(int i=0; i<packets; i++){
+        frequencies[i] = rand() % 100;
+    }
+
+    printf("Transmitting %d packets using Frequency hopping spread spectrum\n",packets);
+    for(int i=0; i<packets; i++){
+        printf("Data packet %d send with frequency: %d\n",i+1,frequencies[i]);
+        printf("Data: %d\n",dataPackets[i]);
+    }
+}
+
+void receiver(int *dataPackets, int packets){
+    printf("Data received:\n");
+    for(int i=0; i<packets; i++){
+        printf("Data packet %d: %d\n",i+1,dataPackets[i]);
+    }
+}
+
+int main()
+{
+    int packets;
+    printf("Enter number of packets to send\n");
+    scanf("%d", &packets);
+
+    int *dataPackets = (int *)malloc(sizeof(int) * size);
+    for (int i = 0; i < packets; i++)
+    {
+        printf("Enter data packet %d\n", i + 1);
+        scanf("%d", &dataPackets[i]);
+    }
+
+    sender(dataPackets, packets);
+    receiver(dataPackets, packets);
+
+    free(dataPackets);
+    return 0;
+}
